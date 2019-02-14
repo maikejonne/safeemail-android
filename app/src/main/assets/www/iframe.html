@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <link href="http://injection/www/ext/miyou.min.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="data:;base64,=">
+</head>
+<body style="padding:0; margin: 0;">
+<div id="screen-root" style="position: absolute;overflow:hidden;background-color: #fff;">
+    <div id="screen-loading" style="margin: 0 auto;text-align:center;"><i name='loading_tip_icon' class='fa fa-spinner fa-pulse' style='font-size: 18px;'></i><p name='loading_tip_title'></p></div>
+    <div id="screen_main" style='position: relative;display: none;'></div>
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="http://injection/www/ext/jquery.min.js"></script>
+<script src="http://injection/www/ext/miyou.min.js"></script>
+<script src="http://injection/www/ext/socket.io.min.js"></script>
+
+<script type="text/javascript">
+    function g_loadScript(url, callback) {
+        callback = callback || function(){};
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type", "text/javascript");
+        fileref.setAttribute("src", url);
+        fileref.onload = fileref.onreadystatechange = function () {
+            if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+                callback(null);
+            } else {
+                callback({"error":"load failed!"});
+            }
+            fileref.onload = fileref.onreadystatechange = null;
+        };
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+    }
+
+    function onMessageParent(rs){
+        if(rs.data.cmd == "respond.geturl"){
+            g_loadScript(rs.data.head+"?v=" + Math.random(),
+                function(err){
+                    if(err != null){
+                        var _div = $("#screen-loading");
+                        _div.find("[name='loading_tip_icon']").hide();
+                        _div.find("[name='loading_tip_title']").text("Load failed. (404 Not Found)");
+                    }else{
+                        initApp();
+                    }
+                }
+            );
+        }else{
+            if(g_MainScreen != null){
+                g_MainScreen.onMessageParent(rs.data);
+            }
+        }
+    }
+
+    window.onload = function () {
+        $("#screen-loading").css({
+            "margin-top":document.documentElement.clientHeight/2-25,
+            "width":document.body.offsetWidth
+        });
+
+        window.addEventListener('message',onMessageParent);
+        window.parent.postMessage(
+            {
+                "cmd":"geturl"
+            },
+            "*"
+        );
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "195657260553",
+    "firebase_url": "https://secrectchat.firebaseio.com",
+    "project_id": "secrectchat",
+    "storage_bucket": "secrectchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195657260553:android:f68649bb4b0c37be",
+        "android_client_info": {
+          "package_name": "com.blockchain.safeemail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195657260553-ojom87f7p4gi95d6okehsf8k344cljns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzc5wQP1lEMMn0e1H21nLiFG3e9ggLQKM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <link href="ext/miyou.min.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="data:;base64,=">
+</head>
+<body style="padding:0; margin: 0;">
+<div id="screen-root" style="position: absolute;overflow:hidden;background: #fff;">
+    <div id="screen-loading" style="margin: 0 auto;text-align:center;"><i name='loading_tip_icon' class='fa fa-spinner fa-pulse' style='font-size: 18px;'></i><p name='loading_tip_title'></p></div>
+    <div id="screen_main" style='position: relative;display: none;'></div>
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--<script>window.PointerEvent = undefined</script>-->
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/nativeInterfaceHelper.js"></script>
+<script src="ext/jquery.min.js"></script>
+<script src="ext/jquery.blowfish.js"></script>
+<script src="ext/spark-md5.min.js"></script>
+<script src="ext/xxtea.min.js"></script>
+<script src="ext/miyou.min.js"></script>
+<script src="ext/socket.io.js"></script>
+
+<script type="text/javascript">
+    var g_MainScreen = null;
+    window.onload = function () {
+        $("#screen-loading").css({
+            "margin-top":document.documentElement.clientHeight/2-25,
+            "width":document.body.offsetWidth
+        });
+        document.addEventListener('deviceready', function(){
+            nativeInterfaceHelper.enableBackgroundRunning(function(){
+                if(g_MainScreen != null){
+                    g_MainScreen.m_pMainScreen.systemSleep();
+                }
+            },function(){
+                if(g_MainScreen != null){
+                    g_MainScreen.m_pMainScreen.systemWakeUp();
+                }
+            });
+            document.addEventListener("backbutton", function(){
+                if(g_MainScreen == null){
+                    navigator.app.exitApp();
+                }else if(g_MainScreen.backKeyDown()){
+                    nativeInterfaceHelper.backToHomeScreen();
+                }
+            }, false);
+            nativeInterfaceHelper.getHostConfig(function(host){
+                $.getScript(host + "/semail/js/main.js?v=" + Math.random())
+                .done(function() {
+                    initApp(host);
+                })
+                .fail(function() {
+                    var _div = $("#screen-loading");
+                    _div.find("[name='loading_tip_icon']").hide();
+                    _div.find("[name='loading_tip_title']").text("Load failed. (404 Not Found)");
+                });
+            }, null);
+        }, false);
+    };
+</script>
+</body>
+</html>

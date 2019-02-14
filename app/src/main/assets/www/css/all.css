@@ -1,0 +1,495 @@
+
+.myanimated {
+    -webkit-animation-duration: .6s;
+    animation-duration: .6s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.myanimated.infinite {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
+
+
+@-webkit-keyframes mybounceInLeft {
+    from, 60%, 75%, 90%, to {
+        -webkit-animation-timing-function: ease;
+        animation-timing-function: ease;
+    }
+
+    0% {
+        opacity: .5;
+        -webkit-transform: translate3d(-3000px, 0, 0);
+        transform: translate3d(-3000px, 0, 0);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translate3d(25px, 0, 0);
+        transform: translate3d(25px, 0, 0);
+    }
+
+    75% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    90% {
+        -webkit-transform: translate3d(5px, 0, 0);
+        transform: translate3d(5px, 0, 0);
+    }
+
+    to {
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes mybounceInLeft {
+    from, 60%, 75%, 90%, to {
+        -webkit-animation-timing-function: ease;
+        animation-timing-function: ease;
+    }
+
+    0% {
+        opacity: .5;
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translate3d(25px, 0, 0);
+        transform: translate3d(25px, 0, 0);
+    }
+
+    75% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    90% {
+        -webkit-transform: translate3d(5px, 0, 0);
+        transform: translate3d(5px, 0, 0);
+    }
+
+    to {
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+.mybounceInLeft {
+    -webkit-animation-name: mybounceInLeft;
+    animation-name: mybounceInLeft;
+}
+
+@-webkit-keyframes mybounceInRight {
+    from, 60%, 75%, 90%, to {
+        -webkit-animation-timing-function: ease;
+        animation-timing-function: ease;
+    }
+
+    from {
+        opacity: .5;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translate3d(-25px, 0, 0);
+        transform: translate3d(-25px, 0, 0);
+    }
+
+    75% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+
+    90% {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0);
+    }
+
+    to {
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes mybounceInRight {
+    from, 60%, 75%, 90%, to {
+        -webkit-animation-timing-function: ease;
+        animation-timing-function: ease;
+    }
+
+    from {
+        opacity: .5;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translate3d(-25px, 0, 0);
+        transform: translate3d(-25px, 0, 0);
+    }
+
+    75% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+
+    90% {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0);
+    }
+
+    to {
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+.mybounceInRight {
+    -webkit-animation-name: mybounceInRight;
+    animation-name: mybounceInRight;
+}
+
+
+@-webkit-keyframes mybounceOutLeft {
+    20% {
+        opacity: 1;
+        -webkit-transform: translate3d(20px, 0, 0);
+        transform: translate3d(20px, 0, 0);
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+@keyframes mybounceOutLeft {
+    20% {
+        opacity: 1;
+        -webkit-transform: translate3d(20px, 0, 0);
+        transform: translate3d(20px, 0, 0);
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+.mybounceOutLeft {
+    -webkit-animation-name: mybounceOutLeft;
+    animation-name: mybounceOutLeft;
+}
+
+@-webkit-keyframes mybounceOutRight {
+    20% {
+        opacity: 1;
+        -webkit-transform: translate3d(-20px, 0, 0);
+        transform: translate3d(-20px, 0, 0);
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+@keyframes mybounceOutRight {
+    20% {
+        opacity: 1;
+        -webkit-transform: translate3d(-20px, 0, 0);
+        transform: translate3d(-20px, 0, 0);
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+.mybounceOutRight {
+    -webkit-animation-name: mybounceOutRight;
+    animation-name: mybounceOutRight;
+}
+
+.screen_cc {
+    position:relative;
+    overflow:hidden;
+}
+
+.my-album-add {
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    background-position: center;
+    width:48px;
+    height:48px;
+    border:none;
+    float:left;
+    margin:2px;
+}
+
+.my-albums-photo {
+    background-color:#ccc;
+    margin:4px;
+}
+
+.my-avatar {
+    background-size: contain;
+    border: 2px solid #ccc;
+    display: block;
+    height: 84px;
+    margin: 0 auto;
+    width: 84px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.friend-avatar {
+    background-size: contain;
+    border: 2px solid white;
+    display: block;
+    height: 48px;
+    margin: 5px auto;
+    width: 48px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.album-avatar {
+    border: none;
+}
+
+.div_stack {
+    width:0;
+    margin:5px 5px 5px 5px;
+}
+
+.div_slide{
+    position: absolute;
+    -webkit-user-select:none;
+    user-select:none;
+    -moz-user-select:none;
+    background:#fcfcfc;
+    border-radius:5px;
+    text-decoration: none;
+    margin-left:0;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.div_slide_backimg {
+    background-size: contain;
+
+    border: 4px solid #FFF;
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+}
+
+.div_stack_tip{
+    position: absolute;
+    text-decoration: none;
+    border:none;
+    font-size: 14px;
+    /*filter: alpha(opacity=50);*/
+    opacity: 0.5;
+    background-color:rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border-radius: 2px;
+    top:10px;
+    padding:0 5px;
+    margin-left:10px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.postdiveditable {
+    padding: 2px 2px;
+    font-size: 16px;
+    /*line-height: 1.467;*/
+    min-height: 32px;
+    max-height: 80px;
+    overflow-y: hidden;
+    outline:0;
+    color: #404040;
+    border: 2px solid #2ecc71;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    /*border-radius: 2px;*/
+    box-shadow: none;
+}
+
+.postdiveditable:focus {
+    border-color: #1abc9c;
+    outline: 0;
+    box-shadow: none;
+}
+
+.postdiveditable[placeholder]:empty:before {
+    content: attr(placeholder);
+    color: #aaaaaa;
+}
+.postdiveditable:focus:before{
+    content:none;
+}
+
+.chatmessage {
+    min-height:44px;
+}
+
+.chatmessage-send {
+    padding:6px 10px 3px 0;
+}
+
+.chatmessage-receive {
+    padding:6px 0 3px 10px;
+}
+
+.message-info {
+    position: relative;
+    overflow: auto;
+    padding: 2px;
+    min-height:50px;
+}
+
+.message-content-box {
+    border-radius: 5px;
+    position: relative;
+    padding: 5px;
+    word-break: break-all;
+    max-width:70%;
+}
+
+.message-content-img {
+    background-size: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.message-send .message-content-box {
+    background: #a0e75a;
+    color: #222;
+    margin-right: 50px;/* 控制与头像的距离*/
+    float: right;
+}
+
+.message-receive .message-content-box {
+    background: #fff;
+    color: #222;
+    margin-left: 50px;
+    float: left;
+}
+
+.message-content-box .arrow {
+    width: 0;
+    height: 0;
+    font-size: 0;
+    border-width: 8px;
+    border-style: solid;
+    position: absolute;
+    top: 10px;
+}
+
+.message-send .message-content-box .arrow {
+    border-color: transparent transparent transparent #a0e75a;
+    right: -16px;
+}
+
+.message-receive .message-content-box .arrow {
+    border-color: transparent #fff transparent transparent;
+    left: -16px;
+}
+
+.message-content {
+    overflow: auto;
+    font-size: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    position: absolute;
+    top: 0;
+}
+
+.message-receive .user-avatar {
+    left: 0;
+}
+
+.message-send .user-avatar {
+    right: 0;
+}
+
+.scroller-hidden {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    width: 100%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+.input-opacity{
+    cursor: pointer;
+    font-size: 14px;
+    outline: medium none;
+    position: absolute;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    opacity:0;
+    left:0;
+    top: 0;
+}
+
+.edit-avatar-div{
+    width:100%;
+    height:100%;
+}
+
+.edit-avatar-img{
+    background-size: 100% 100%;
+    display: block;
+    background-color:#999;
+}
+
+.storyInputEmpty{
+    background-color: #d8e2e9;
+}
+
+.storyInput {
+    background-color: #fc7946;
+}

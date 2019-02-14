@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Safe Email</string>
+    <string name="launcher_name">@string/app_name</string>
+    <string name="activity_name">@string/launcher_name</string>
+
+    <string name="library_name">MediaPicker</string>
+    <string name="all_dir_name">All Image and Video</string>
+    <string name="all_video">All Video</string>
+    <string name="all_image">All Image</string>
+    <string name="select_title">Select Image and Video</string>
+    <string name="select_video_title">Select Video</string>
+    <string name="select_image_title">Select Image</string>
+    <string name="video_dir_name">All Video</string>
+    <string name="msg_amount_limit">Has reached the maximum number of choices</string>
+    <string name="msg_size_limit">The maximum file size is only</string>
+    <string name="select_null">please select file</string>
+    <!--<string name="done">Done</string>-->
+    <string name="count_string"></string>
+    <string name="preview">Preview</string>
+    <string name="select">Select</string>
+    <string name="video">video</string>
+    <string name="cant_play_video">No program to play!</string>
+    <string name="READ_EXTERNAL_STORAGE">Need to open read storage permissions</string>
+    <string name="WRITE_EXTERNAL_STORAGE">Need to open write storage permissions</string>
+    <string name="NOTIFICATION_BACKGROUND">Background Running</string>
+    <string name="NOTIFICATION_MESSAGE">Receive New Message</string>
+    <string name="MENU_ITEM_IMAGE">Save Image</string>
+
+    <string name="EXPORT_VIEW_TITLE">Export Private Key</string>
+    <string name="EXPORT_VIEW_INPUT_PW">Password:</string>
+    <string name="EXPORT_VIEW_CONFIRM_PW">Confirm Password:</string>
+    <string name="EXPORT_VIEW_CANCEL">Cancel</string>
+    <string name="EXPORT_VIEW_CONFIRM">Confirm</string>
+    <string name="EXPORT_VIEW_PLEASE_INPUT">Please Input Password!</string>
+    <string name="EXPORT_VIEW_CONFIRM_INPUT">Input Passwords Are Not Equal!</string>
+</resources>
