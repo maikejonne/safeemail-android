@@ -1239,14 +1239,57 @@ public class InterfaceWrap extends CordovaPlugin {
             public void handleData(byte[] content) {
                 try {
                     JSONObject result = new JSONObject(new String(content));
-                    decodeUserArrayJson(result.getJSONArray("users"));
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, createReturnUserData()));
-                } catch (NativeSecp256k1Util.AssertFailException e) {
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.getMessage()));
+                    cordova.getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            showImportPrivateKeyPanel(result, callbackContext);
+                        }
+                    });
                 } catch (JSONException e) {
                     callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.getMessage()));
                 } catch (Exception e) {
                     callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.getMessage()));
+                }
+            }
+        });
+    }
+
+    private void showImportPrivateKeyPanel(JSONObject result, CallbackContext callbackContext){
+        AlertDialog.Builder builder = new AlertDialog.Builder(cordova.getActivity());
+        LayoutInflater inflater = cordova.getActivity().getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.export_main, null))
+                .setPositiveButton(R.string.EXPORT_VIEW_CONFIRM, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                })
+                .setNegativeButton(R.string.EXPORT_VIEW_CANCEL, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EditText m_InputPW = dialog.findViewById(R.id.input_pw);
+                EditText m_ConfirmPW =dialog.findViewById(R.id.input_pw2);
+                if(m_InputPW.getText().length() <= 0 || m_ConfirmPW.getText().length() <= 0){
+                    Toast.makeText(dialog.getContext(), R.string.EXPORT_VIEW_PLEASE_INPUT, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!m_InputPW.getText().toString().equals(m_ConfirmPW.getText().toString())){
+                    Toast.makeText(dialog.getContext(), R.string.EXPORT_VIEW_CONFIRM_INPUT, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    decodeUserArrayJson(result.getJSONArray("users"), m_InputPW.getText().toString());
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, createReturnUserData()));
+                    dialog.dismiss();
+                } catch (Exception e) {
+                    callbackContext.error(e.getMessage());
                 }
             }
         });
