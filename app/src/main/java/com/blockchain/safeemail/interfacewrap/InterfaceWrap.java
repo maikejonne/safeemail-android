@@ -1256,7 +1256,7 @@ public class InterfaceWrap extends CordovaPlugin {
     private void showImportPrivateKeyPanel(JSONObject result, CallbackContext callbackContext){
         AlertDialog.Builder builder = new AlertDialog.Builder(cordova.getActivity());
         LayoutInflater inflater = cordova.getActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.export_main, null))
+        builder.setView(inflater.inflate(R.layout.import_main, null))
                 .setPositiveButton(R.string.EXPORT_VIEW_CONFIRM, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -1275,13 +1275,8 @@ public class InterfaceWrap extends CordovaPlugin {
             public void onClick(View v)
             {
                 EditText m_InputPW = dialog.findViewById(R.id.input_pw);
-                EditText m_ConfirmPW =dialog.findViewById(R.id.input_pw2);
-                if(m_InputPW.getText().length() <= 0 || m_ConfirmPW.getText().length() <= 0){
+                if(m_InputPW.getText().length() <= 0){
                     Toast.makeText(dialog.getContext(), R.string.EXPORT_VIEW_PLEASE_INPUT, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(!m_InputPW.getText().toString().equals(m_ConfirmPW.getText().toString())){
-                    Toast.makeText(dialog.getContext(), R.string.EXPORT_VIEW_CONFIRM_INPUT, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 try {
@@ -1315,6 +1310,12 @@ public class InterfaceWrap extends CordovaPlugin {
             @Override
             public void handleData(InputStream inputStream, String contentType) {
                 try {
+                    final int BUFFER_SIZE = 1048576;
+                    final int HEADER_SIZE = 256;
+                    int fileSize = inputStream.available();
+                    if(fileSize < HEADER_SIZE){
+                        throw new Exception("file size is too small to encrypt!");
+                    }
                     String rootDir = Environment.getExternalStorageDirectory().getPath() + "/" + DIRECTORY_NAME + "/";
                     File rootDirFile = new File(rootDir);
                     if (!rootDirFile.exists()) {
@@ -1328,19 +1329,17 @@ public class InterfaceWrap extends CordovaPlugin {
                         }
                     }
                     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(tempFile));
-                    final int BUFFER_SIZE = 1048576;
-                    final int HEADER_SIZE = 256;
                     String headerBase64 = "";
-                    byte[] tmp = new byte[BUFFER_SIZE];
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                     MessageDigest md = MessageDigest.getInstance("MD5");
                     DigestOutputStream dis = new DigestOutputStream(bufferedOutputStream, md);
                     byte[] outLength = new byte[4];
-
+                    int firstBlockSize = Math.min(BUFFER_SIZE, fileSize);
+                    byte[] firstBlock = new byte[firstBlockSize];
                     int outputTotalSize = 0;
-                    { //separate first 600 result bytes not write into dest file
-                        bufferedInputStream.read(tmp, 0, BUFFER_SIZE);
-                        byte[] encrypted = NativeBlowfish.encrypt(tmp, pw.getBytes());
+                    { //separate first 256 result bytes not write into dest file
+                        bufferedInputStream.read(firstBlock, 0, firstBlockSize);
+                        byte[] encrypted = NativeBlowfish.encrypt(firstBlock, pw.getBytes());
                         Utils.uint32ToByteArrayLE(encrypted.length, outLength, 0);
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                         outputStream.write(outLength);
@@ -1350,16 +1349,19 @@ public class InterfaceWrap extends CordovaPlugin {
                         dis.write(encrypted, HEADER_SIZE - outLength.length, encrypted.length - HEADER_SIZE + outLength.length);
                         outputTotalSize += encrypted.length - HEADER_SIZE + outLength.length;
                     }
-
-                    while (bufferedInputStream.available() > 0) {
-                        bufferedInputStream.read(tmp, 0, BUFFER_SIZE);
-                        byte[] encrypted = NativeBlowfish.encrypt(tmp, pw.getBytes());
-                        Utils.uint32ToByteArrayLE(encrypted.length, outLength, 0);
-                        dis.write(outLength);
-                        dis.write(encrypted);
-                        outputTotalSize += outLength.length;
-                        outputTotalSize += encrypted.length;
+                    if(bufferedInputStream.available() > 0){
+                        byte[] tmp = new byte[BUFFER_SIZE];
+                        while (bufferedInputStream.available() > 0) {
+                            bufferedInputStream.read(tmp, 0, BUFFER_SIZE);
+                            byte[] encrypted = NativeBlowfish.encrypt(tmp, pw.getBytes());
+                            Utils.uint32ToByteArrayLE(encrypted.length, outLength, 0);
+                            dis.write(outLength);
+                            dis.write(encrypted);
+                            outputTotalSize += outLength.length;
+                            outputTotalSize += encrypted.length;
+                        }
                     }
+
                     dis.flush();
                     String md5 = ByteUtils.toHexString(md.digest());
                     String path = rootDir + "/" + md5 + ".json";
