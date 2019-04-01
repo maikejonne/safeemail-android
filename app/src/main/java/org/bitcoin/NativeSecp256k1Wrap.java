@@ -46,7 +46,11 @@ public class NativeSecp256k1Wrap extends CordovaPlugin {
                 public void run() {
                     try {
                         boolean result = NativeSecp256k1.verify(data, signature, pub);
-                        callbackContext.success(result ? 1 : 0);
+                        if(result){
+                            callbackContext.success();
+                        }else {
+                            callbackContext.error("verify failed!");
+                        }
                     } catch (Exception e) {
                         callbackContext.error(e.getMessage());
                     }
@@ -64,7 +68,11 @@ public class NativeSecp256k1Wrap extends CordovaPlugin {
                 public void run() {
                     try {
                         boolean result = NativeSecp256k1.verify(hashData, signature, pub);
-                        callbackContext.success(result ? 1 : 0);
+                        if(result){
+                            callbackContext.success();
+                        }else {
+                            callbackContext.error("verify failed!");
+                        }
                     } catch (Exception e) {
                         callbackContext.error(e.getMessage());
                     }

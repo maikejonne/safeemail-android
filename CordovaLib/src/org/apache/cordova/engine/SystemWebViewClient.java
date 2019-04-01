@@ -324,7 +324,8 @@ public class SystemWebViewClient extends WebViewClient {
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 
         if(url != null && url.contains(INJECTION_TOKEN)) {
-            String assetPath = url.substring(url.indexOf(INJECTION_TOKEN) + INJECTION_TOKEN.length(), url.length());
+            String newURL = url.replace("/\\../g","");
+            String assetPath = "www/ext/" + newURL.substring(newURL.indexOf(INJECTION_TOKEN) + INJECTION_TOKEN.length());
             String contentType = getMimeType(assetPath);
             if(contentType == null || contentType.isEmpty()){
                 contentType = "text/plain";

@@ -28,12 +28,11 @@ var nativeInterfaceHelper = {
                 fileEntry.createWriter(function (fileWriter) {
 
                     fileWriter.onwriteend = function() {
-                        console.log("Successful file write...");
                         success();
                     };
 
                     fileWriter.onerror = function (e) {
-                        console.log("Failed file write: " + e.toString());
+                        fail(e.toString());
                     };
 
                     var dataObj = new Blob([data], { type: 'text/plain' });
@@ -50,7 +49,6 @@ var nativeInterfaceHelper = {
                    // Create a FileWriter object for our FileEntry (log.txt).
                     fileEntry.createWriter(function (fileWriter) {
                         fileWriter.onwriteend = function() {
-                            console.log("Successful file write...");
                             success();
                         };
 
@@ -68,8 +66,11 @@ var nativeInterfaceHelper = {
         window.resolveLocalFileSystemURL(path, function (fileEntry) {
             fileEntry.file(function (file) {
                 var reader = new FileReader();
-                reader.onloadend = function() {
+                reader.onload = function() {
                     success(this.result);
+                };
+                reader.onerror = function () {
+                    fail("read file error.");
                 };
                 reader.readAsText(file);
 
@@ -81,10 +82,12 @@ var nativeInterfaceHelper = {
         window.resolveLocalFileSystemURL(path, function (fileEntry) {
             fileEntry.file(function (file) {
                 var reader = new FileReader();
-                reader.onloadend = function() {
+                reader.onload = function() {
                     success(this.result);
                 };
-
+                reader.onerror = function () {
+                    fail("read file error.");
+                };
                 if(fileType == "text"){
                     reader.readAsText(file);
                 } else if(fileType == "dataUrl"){
@@ -216,15 +219,15 @@ var nativeInterfaceHelper = {
         media.thumbnailQuality = 10;
         //loadingUI(); //show loading ui
         MediaPicker.extractThumbnail(media, function(data) {
-            media["thumbnail"] = 'data:image/jpeg;base64,' + data.thumbnailBase64;
+            media.thumbnail = 'data:image/jpeg;base64,' + data.thumbnailBase64;
             media.path = "file://" + media.path;
-            var i = new Image();
-            i.onload = function(){
-                media["thumbnailWidth"] = i.width;
-                media["thumbnailHeight"] = i.height;
+            var _img = new Image();
+            _img.onload = function(){
+                media.thumbnailWidth = _img.width;
+                media.thumbnailHeight = _img.height;
                 if(success) success(media);
             };
-            i.src = media["thumbnail"];
+            _img.src = media.thumbnail;
         }, fail);
     },
 
@@ -235,14 +238,14 @@ var nativeInterfaceHelper = {
         media.mediaType = "video";
         MediaPicker.extractThumbnail(media, function(data) {
             var result = {};
-            result["thumbnail"] = 'data:image/jpeg;base64,' + data.thumbnailBase64;
-            var i = new Image();
-            i.onload = function(){
-                result["thumbnailWidth"] = i.width;
-                result["thumbnailHeight"] = i.height;
+            result.thumbnail = 'data:image/jpeg;base64,' + data.thumbnailBase64;
+            var _img = new Image();
+            _img.onload = function(){
+                result.thumbnailWidth = _img.width;
+                result.thumbnailHeight = _img.height;
                 if(success) success(result);
             };
-            i.src = result["thumbnail"];
+            _img.src = result.thumbnail;
         }, fail);
     },
 
@@ -299,7 +302,6 @@ var nativeInterfaceHelper = {
     encryptDataByFile:function(password, path, success, fail){
         InterfaceWrap.encryptDataByFile(password, path, function(result){
             if(!result || result.length < 4){
-                console.log("json stringify list data fail!");
                 fail("json stringify list data fail!");
                 return;
             }
@@ -322,7 +324,6 @@ var nativeInterfaceHelper = {
     compressVideo:function(path, w, h, destPath, destFileName, success, fail){
         InterfaceWrap.compressVideo(path, w, h, destPath, destFileName, function(result){
             if(!result || result.length < 2){
-                console.log("json stringify list data fail!");
                 fail("json stringify list data fail!");
                 return;
             }
@@ -333,7 +334,6 @@ var nativeInterfaceHelper = {
     compressAudio:function(path, destPath, destFileName, success, fail){
         InterfaceWrap.compressAudio(path, destPath, destFileName, function(result){
             if(!result || result.length < 2){
-                console.log("json stringify list data fail!");
                 fail("json stringify list data fail!");
                 return;
             }
@@ -352,7 +352,6 @@ var nativeInterfaceHelper = {
     downloadFile:function(url, success, fail){
         InterfaceWrap.downloadFile(url, function(result){
             if(!result || result.length < 2){
-                console.log("json stringify list data fail!");
                 fail("json stringify list data fail!");
                 return;
             }
